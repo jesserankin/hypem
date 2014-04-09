@@ -33,8 +33,10 @@ module Hypem
 
     def get
       response = Request.get_data("/playlist/item/#{media_id}")
-      track_data = response.find{|t| t['mediaid'] = media_id}
-      update_from_response track_data
+      if response.is_a?(Array)
+        response = response.find{|t| t['mediaid'] = media_id}
+      end
+      update_from_response response
       self
     end
 
